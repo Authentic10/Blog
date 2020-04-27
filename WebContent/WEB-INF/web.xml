@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>Blog</display-name>
+  <!-- Welcome file -->
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!-- FILTERS -->
+  <filter>
+     <filter-name>AuthenticationFilter</filter-name>
+     <filter-class>com.blog.filters.AuthenticationFilter</filter-class>
+  </filter>
+  <filter-mapping>
+     <filter-name>AuthenticationFilter</filter-name>
+     <url-pattern>/VIEWS/*</url-pattern>
+     <dispatcher>REQUEST</dispatcher>    
+     <dispatcher>FORWARD</dispatcher>
+  </filter-mapping>
+  
+  <!-- SERVLETS -->
+   <servlet>
+	    <servlet-name>Home</servlet-name>
+	    <servlet-class>com.blog.servlets.UserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	    <servlet-name>Home</servlet-name>
+	    <url-pattern>/home</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+	    <servlet-name>Index</servlet-name>
+	    <servlet-class>com.blog.servlets.Index</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	    <servlet-name>Index</servlet-name>
+	    <url-pattern>/index</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+	    <servlet-name>LogoutServlet</servlet-name>
+	    <servlet-class>com.blog.servlets.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	    <servlet-name>LogoutServlet</servlet-name>
+	    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+	    <servlet-name>SignUp</servlet-name>
+	    <servlet-class>com.blog.servlets.SignUp</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	    <servlet-name>SignUp</servlet-name>
+	    <url-pattern>/signup</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+	    <servlet-name>CodeVerification</servlet-name>
+	    <servlet-class>com.blog.servlets.CodeVerification</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	    <servlet-name>CodeVerification</servlet-name>
+	    <url-pattern>/codeVerification</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+	    <servlet-name>CompleteProfile</servlet-name>
+	    <servlet-class>com.blog.servlets.CompleteProfile</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	    <servlet-name>CompleteProfile</servlet-name>
+	    <url-pattern>/completeProfile</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+	    <servlet-name>Search</servlet-name>
+	    <servlet-class>com.blog.servlets.Search</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	    <servlet-name>Search</servlet-name>
+	    <url-pattern>/search</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+	    <servlet-name>Follow</servlet-name>
+	    <servlet-class>com.blog.servlets.Follow</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	    <servlet-name>Follow</servlet-name>
+	    <url-pattern>/follow</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+	    <servlet-name>Unfollow</servlet-name>
+	    <servlet-class>com.blog.servlets.Unfollow</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	    <servlet-name>Unfollow</servlet-name>
+	    <url-pattern>/unfollow</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+	    <servlet-name>Followers</servlet-name>
+	    <servlet-class>com.blog.servlets.Followers</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	    <servlet-name>Followers</servlet-name>
+	    <url-pattern>/followers</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+	    <servlet-name>Following</servlet-name>
+	    <servlet-class>com.blog.servlets.Following</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	    <servlet-name>Following</servlet-name>
+	    <url-pattern>/following</url-pattern>
+  </servlet-mapping>
+  
+  
+  <!-- TAGLIBS CONFIG IN JSP -->
+ <jsp-config>
+    <jsp-property-group>
+      <url-pattern>*.jsp</url-pattern>
+      <include-prelude>/WEB-INF/taglibs.jsp</include-prelude>
+    </jsp-property-group>
+ </jsp-config>
+</web-app>

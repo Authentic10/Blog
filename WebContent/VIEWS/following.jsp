@@ -14,14 +14,39 @@
 	<div class="container"><br><br>
 	  <ul class="nav nav-tabs ">
 		  <li class="nav-item">
-		    <a class="nav-link " href="Followers">Followers</a>
+		    <a class="nav-link " href="Followers?username=${username }">Followers</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link active" href="Following">Following</a>
+		    <a class="nav-link active" href="Following?username=${username }">Following</a>
 		  </li>
 		</ul>
 	  <br>
-	  <p><strong>Note:</strong> This example shows how to create a basic navigation tab. It is not toggleable/dynamic yet (you can't click on the links to display different content)- see the last example in the Bootstrap Tabs and Pills Tutorial to find out how this can be done.</p>
+	  <table class="table table-hover">
+	   <c:forEach var="follow" items="${following}" varStatus="i">
+		    <tr >
+		    <c:choose>
+			  <c:when test="${!empty follow.biography }">
+			     <td>
+			        <a href="Profile?username=${follow.username }" class="nav-link" style="color:black;">
+				        <img class="rounded-circle float-left" alt="" width="50" height="46" src="PICTURES/${follow.profile}"> 
+			       		&nbsp;&nbsp;<c:out value="${follow.firstname }   ${follow.lastname } (${follow.username })"/><br>
+			      	 	&nbsp;&nbsp;<c:out value="${follow.biography }" />			        
+			        </a>
+		         </td>
+			  </c:when>
+			  <c:otherwise>
+			     <td>
+			        <a href="Profile?username=${follow.username }" class="nav-link" style="color:black;">
+			        	<img class="rounded-circle float-left" alt="" width="50" height="46" src="PICTURES/${follow.profile}"> 
+		       		    &nbsp;&nbsp;<c:out value="${follow.firstname }   ${follow.lastname } (${follow.username })"/><br>
+		      	 	    &nbsp;&nbsp;<c:out value="No biography" />
+			        </a>		        
+		        </td>
+			  </c:otherwise>
+			</c:choose>	
+		    </tr>
+	   </c:forEach> 
+	 </table>
 	</div>
 
 

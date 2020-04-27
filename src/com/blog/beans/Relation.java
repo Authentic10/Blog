@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -309,6 +311,115 @@ public class Relation {
 		DBConnection.close();
 			
 }
+	
+	public List<User> getUserFollowers(String username) {
+		
+		List<User> users = new ArrayList<User>();
+		
+		ResultSet result = null;
+		PreparedStatement state = null;
+		
+		int user_id = getUserId(username);
+			
+		if(user_id!=0) {
+	
+			connection = DBConnection.getInstance();
+			 
+			try {
+				state = connection.prepareStatement("SELECT username, firstname, lastname, avatar, biography FROM Users U, Following F WHERE U.UserID = F.UserID AND F.UserFollowingID = ?");
+					
+				state.setInt(1, user_id);
+				
+				result = state.executeQuery();
+				
+				
+				while(result.next()) {
+					String user_name = result.getString(1);
+					String firstname = result.getString(2);
+					String lastname = result.getString(3);
+					String avatar = result.getString(4);
+					String biography = result.getString(5);
+					
+					User user = new User();
+					user.setUsername(user_name);
+					user.setFirstname(firstname);
+					user.setLastname(lastname);
+					user.setProfile(avatar);
+					user.setBiography(biography);
+					
+					users.add(user);
+					
+				}
+				
+				
+				queryResult = "ok";
+				
+			}
+			catch(SQLException e){
+				queryResult= "no";
+				e.printStackTrace();
+			}
+		}
+			
+		DBConnection.close();
+			
+		return users;
+	}
+	
+	
+	public List<User> getUserFollowing(String username) {
+		
+		List<User> users = new ArrayList<User>();
+		
+		ResultSet result = null;
+		PreparedStatement state = null;
+		
+		int user_id = getUserId(username);
+			
+		if(user_id!=0) {
+	
+			connection = DBConnection.getInstance();
+			 
+			try {
+				state = connection.prepareStatement("SELECT username, firstname, lastname, avatar, biography FROM Users U, Followers F WHERE U.UserID = F.UserID AND F.UserFollowerID = ?");
+					
+				state.setInt(1, user_id);
+				
+				result = state.executeQuery();
+				
+				
+				while(result.next()) {
+					String user_name = result.getString(1);
+					String firstname = result.getString(2);
+					String lastname = result.getString(3);
+					String avatar = result.getString(4);
+					String biography = result.getString(5);
+					
+					User user = new User();
+					user.setUsername(user_name);
+					user.setFirstname(firstname);
+					user.setLastname(lastname);
+					user.setProfile(avatar);
+					user.setBiography(biography);
+					
+					users.add(user);
+					
+				}
+				
+				
+				queryResult = "ok";
+				
+			}
+			catch(SQLException e){
+				queryResult= "no";
+				e.printStackTrace();
+			}
+		}
+			
+		DBConnection.close();
+			
+		return users;
+	}
 	
 
 }

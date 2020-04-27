@@ -23,7 +23,7 @@
 	        </a>
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 	          <a class="dropdown-item" href="#"><i class="fas fa-plus" title="New Post"></i>  New Post</a>
-	          <a class="dropdown-item" href="Followers"><i class="fas fa-user-friends" title="Relations"></i> Relations</a>
+	          <a class="dropdown-item" href="Followers?username=${sessionScope.username}"><i class="fas fa-user-friends" title="Relations"></i> Relations</a>
 	          <a class="dropdown-item" href="Profile?username=${sessionScope.username}"><i class="fas fa-user" title="Profile"></i>  Profile</a>
 	          <div class="dropdown-divider"></div>
 	          <a class="dropdown-item" href="LogoutServlet"><i class="fas fa-sign-out-alt" title="Logout"></i>  Sign-out</a>

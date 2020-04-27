@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.blog.beans.Relation;
+
 /**
  * Servlet implementation class Relation
  */
@@ -27,6 +29,14 @@ public class Followers extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		String username = request.getParameter("username");
+		
+		Relation relation = new Relation();
+				
+		request.setAttribute("followers", relation.getUserFollowers(username));
+		request.setAttribute("username", username);
+		
 		this.getServletContext().getRequestDispatcher("/VIEWS/followers.jsp").forward(request, response);
 	}
 

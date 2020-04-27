@@ -47,7 +47,7 @@
 		<div class="row float-right">
 		<c:choose>
 		  <c:when test="${relation.followersSize > 0}">
-		    <a href="#" class="nav-link"><c:out value="${relation.followersSize}"/> Follower(s)</a>
+		    <a href="Followers?username=${user.username}" class="nav-link"><c:out value="${relation.followersSize}"/> Follower(s)</a>
 		  </c:when>
 		  <c:otherwise>
 		    <a href="#" class="nav-link"><c:out value="${relation.followersSize}"/> Follower(s)</a>
@@ -55,7 +55,7 @@
 		</c:choose>
 		<c:choose>
 		  <c:when test="${relation.followingSize > 0}">
-		    <a href="#" class="nav-link"><c:out value="${relation.followingSize}"/> Following</a>
+		    <a href="Following?username=${user.username}" class="nav-link"><c:out value="${relation.followingSize}"/> Following</a>
 		  </c:when>
 		  <c:otherwise>
 		    <a href="#" class="nav-link"><c:out value="${relation.followingSize}"/> Following</a>

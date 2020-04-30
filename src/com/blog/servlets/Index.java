@@ -56,8 +56,10 @@ public class Index extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("username", request.getParameter("username"));
 				session.setAttribute("avatar","PICTURES/"+profileName);
-							
-				this.getServletContext().getRequestDispatcher("/VIEWS/home.jsp").forward(request, response);
+				session.setAttribute("account", form.getAccount());
+				
+				response.sendRedirect(request.getContextPath() + "/userServlet");
+											
 			} else if(check=="av") {
 				HttpSession session = request.getSession();
 				session.setAttribute("username", request.getParameter("username"));
@@ -72,7 +74,6 @@ public class Index extends HttpServlet {
 				
 			} else {		
 				this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
-				//request.getRequestDispatcher("/index").forward( request, response );
 			}
 			
 		} 

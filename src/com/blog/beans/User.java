@@ -81,6 +81,11 @@ public class User
 	 */
 	private String queryResult;
 	
+	/**
+	 * Query result
+	 */
+	private String account;
+	
 
 	public int getId() {
 		return id;
@@ -173,6 +178,14 @@ public class User
 		this.queryResult = queryResult;
 	}
 
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
 	/**
 	 * Sign-in user method
 	 */
@@ -183,7 +196,7 @@ public class User
 		
 		username = request.getParameter("username");
 		password = request.getParameter("password");
-		
+				
 		String encrypted = EncryptPassword.encrypt(password);
 				
 		if(!username.equals(null)) {
@@ -219,11 +232,12 @@ public class User
 						if(dbUserAV.equals("2")) {
 							queryResult = "ok";
 						} else if(dbUserAV.equals("0")) {
-							queryResult = "av";
+							queryResult = "av"; //account not validated
 						} else if(dbUserAV.equals("1")) {
 							queryResult = "ci"; //Complete information
 						}
 						profile = dbAvatar;
+						account = dbUserAV;
 					}
 					else {
 						queryResult = "no";
@@ -246,6 +260,9 @@ public class User
 		
 	}
 	
+	/**
+	 * Sign up user
+	 */
 	public void signUpUser(HttpServletRequest request) {
 		
 		PreparedStatement state = null;
@@ -289,6 +306,8 @@ public class User
 
 				queryResult = "ok";
 				
+				account = "0";
+				
 			}
 			catch(SQLException e){
 				queryResult= "There was an error, please retry !";
@@ -300,6 +319,9 @@ public class User
 		
 	}
 	
+	/**
+	 * Check the user subscription confirmation code
+	 */
 	public void codeVerification(HttpServletRequest request) {
 		ResultSet result = null;
 		PreparedStatement state = null;
@@ -343,6 +365,8 @@ public class User
 
 							queryResult = "ok";
 							
+							session.setAttribute("account", "1");
+							
 						}
 						catch(SQLException e){
 							queryResult= "no";
@@ -350,7 +374,7 @@ public class User
 						}
 				}
 				else {
-					queryResult = "ic";
+					queryResult = "ic"; //Complete information
 				}
 
 			}
@@ -367,6 +391,9 @@ public class User
 		
 	}
 	
+	/**
+	 * Complete user profile
+	 */
 	public void profileComplete(HttpServletRequest request, String uploadPath) throws IOException, ServletException {
 		
 		HttpSession session = request.getSession();
@@ -380,6 +407,7 @@ public class User
 		lastname = request.getParameter("lastname");
 		firstname = request.getParameter("firstname");
 		biography = request.getParameter("biography");
+		
 		
 		for ( Part part : request.getParts() ) {
 	        String fileName = getFileName( part );
@@ -421,6 +449,7 @@ public class User
 				queryResult = "ok";
 				
 				session.setAttribute("avatar","PICTURES/"+finalName);
+				session.setAttribute("account", "2");
 				
 			}
 			catch(SQLException e){
@@ -433,12 +462,13 @@ public class User
 		
 	}
 	
+	/**
+	 * Get an user information
+	 */
     public void loadUserInformation(HttpServletRequest request) {
     	ResultSet result = null;
 		PreparedStatement state = null;
-				
-		//HttpSession session = request.getSession();
-		
+						
 		String username = (String) request.getParameter("username");
 				
 		queryResult = "";
@@ -478,6 +508,56 @@ public class User
 		
 	}
     
+    /**
+	 * Load current user information
+	 */
+    public void loadCurrentUser(HttpServletRequest request) {
+    	ResultSet result = null;
+		PreparedStatement state = null;
+				
+		HttpSession session = request.getSession();
+		
+		String username = (String) session.getAttribute("username");
+				
+		queryResult = "";
+		
+		if(username!=null) {
+			
+			connection = DBConnection.getInstance();
+			 						
+			try {
+				state = connection.prepareStatement("SELECT firstname, lastname, biography, avatar, username FROM Users WHERE username = ?");
+					
+				state.setString(1, username);
+				
+				result = state.executeQuery();
+				
+				
+				while(result.next()) {
+					firstname = result.getString(1);
+					lastname = result.getString(2);
+					biography = result.getString(3);
+					profile = result.getString(4);
+					this.username = result.getString(5);
+				}
+				
+
+				queryResult = "ok";
+				
+			}
+			catch(SQLException e){
+				queryResult= "no";
+				e.printStackTrace();
+			}
+		} 
+				
+		DBConnection.close();
+		
+	}
+    
+    /**
+	 * Search an user
+	 */
     public List<User> searchUser(String username) {
     	
     	List<User> users = new ArrayList<User>();
@@ -530,7 +610,7 @@ public class User
 		return users;
 		
 	}
-	
+    
 
 	/**
 	 * email address validation

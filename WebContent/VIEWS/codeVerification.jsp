@@ -72,7 +72,9 @@
 	
 <script type="text/javascript">
 	 $('.msg_error').hide();
-	 $(document).ready(function () {		 
+	 $(document).ready(function () {	
+		 
+		 	/*Form validation*/
 		    $('#btn-aut').click(function () {
 		        var code = $('#code').val();
 

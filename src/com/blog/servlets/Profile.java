@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.blog.beans.Post;
 import com.blog.beans.Relation;
 import com.blog.beans.User;
 
@@ -38,12 +39,13 @@ public class Profile extends HttpServlet {
 		
 		String current_user = (String) session.getAttribute("username");
 		String username = (String) request.getParameter("username");
-		
-		System.out.println("CURRENT : "+current_user);
-		System.out.println("USERNAME : "+username);
 				
 		User user = new User();
 		user.loadUserInformation(request);
+		
+		String profileName = user.getProfile();
+		
+		user.setProfile("PICTURES/"+profileName);
 		
 		Relation relation = new Relation();
 		
@@ -51,14 +53,14 @@ public class Profile extends HttpServlet {
 		relation.getUserFollwingSize(username);
 		
 		relation.checkIfUserFollow(username, current_user);
-		
-		String profileName = user.getProfile();
-		
-		user.setProfile("PICTURES/"+profileName);
+				
+		Post posts = new Post();	
 				
 		request.setAttribute("user", user);
 		
 		request.setAttribute("relation", relation);
+		
+		request.setAttribute("posts", posts.getUserPosts(request));
 		
 		this.getServletContext().getRequestDispatcher("/VIEWS/profile.jsp").forward(request, response);
 	}

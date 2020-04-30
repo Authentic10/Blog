@@ -7,7 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.blog.beans.Post;
 import com.blog.beans.User;
 
 
@@ -32,17 +34,30 @@ public class UserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		User user = new User();
-		user.loadUserInformation(request);
+		HttpSession session = request.getSession();
 		
-		String profileName = user.getProfile();
+		String account = (String) session.getAttribute("account");
 		
-		user.setProfile("PICTURES/"+profileName);
-				
-		request.setAttribute("user", user);
-		
-		this.getServletContext().getRequestDispatcher("/VIEWS/home.jsp").forward(request, response);	
-		
+		if((account.equals("2"))) {
+			
+			User user = new User();
+			user.loadUserInformation(request);
+			
+			String profileName = user.getProfile();
+			
+			user.setProfile("PICTURES/"+profileName);
+			
+			Post posts = new Post();
+					
+			request.setAttribute("user", user);
+			request.setAttribute("posts", posts.getPosts(request));
+			
+			this.getServletContext().getRequestDispatcher("/VIEWS/home.jsp").forward(request, response);
+		} else if(account.equals("1")) {
+			this.getServletContext().getRequestDispatcher("/VIEWS/completeProfile.jsp").forward(request, response);
+		} else {
+			this.getServletContext().getRequestDispatcher("/VIEWS/codeVerification.jsp").forward(request, response);
+		}		
 	}
 
 	/**

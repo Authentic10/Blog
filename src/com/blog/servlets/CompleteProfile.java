@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.blog.beans.User;
 
@@ -34,7 +35,6 @@ public class CompleteProfile extends HttpServlet {
     @Override
     public void init() throws ServletException {
         uploadPath = getServletContext().getRealPath( IMAGES_FOLDER );
-        System.out.println("PAT : "+uploadPath);
         File uploadDir = new File( uploadPath );
         if ( ! uploadDir.exists() ) uploadDir.mkdir();
     }
@@ -52,7 +52,17 @@ public class CompleteProfile extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		this.getServletContext().getRequestDispatcher("/VIEWS/completeProfile.jsp").forward(request, response);
+		HttpSession session = request.getSession();
+		
+		String account = (String) session.getAttribute("account");
+		
+		if((account.equals("2"))) {
+			this.getServletContext().getRequestDispatcher("/VIEWS/home.jsp").forward(request, response);
+		} else if(account.equals("1")) {
+			this.getServletContext().getRequestDispatcher("/VIEWS/completeProfile.jsp").forward(request, response);
+		} else {
+			this.getServletContext().getRequestDispatcher("/VIEWS/codeVerification.jsp").forward(request, response);
+		}
 	}
 
 	/**

@@ -53,9 +53,9 @@
 			  <div class="col text-center">
 			  	<button type="button" class="btn btn-primary" id="btn-aut" >Submit</button>
 			  </div>
-			  <div class="row my-4">
-		      	<a class="mr-5" href="SignUp">Sign-up ?</a>
-		      	<a class="ml-2" href="#">Forgot password ?</a>
+			  <div class="text-center my-4">
+		      	<a class="" href="SignUp">Sign-up ?</a>
+		      	<!--  <a class="ml-2" href="#">Forgot password ?</a>-->
 		      </div>
 		</form>
 	</div>

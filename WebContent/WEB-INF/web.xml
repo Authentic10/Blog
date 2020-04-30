@@ -3,8 +3,13 @@
   <display-name>Blog</display-name>
   <!-- Welcome file -->
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>/index.jsp</welcome-file>
   </welcome-file-list>
+  
+  <!-- SESSION TIME -->
+  <session-config>
+    <session-timeout>45</session-timeout>
+  </session-config>
   
   <!-- FILTERS -->
   <filter>
@@ -20,12 +25,12 @@
   
   <!-- SERVLETS -->
    <servlet>
-	    <servlet-name>Home</servlet-name>
+	    <servlet-name>UserServlet</servlet-name>
 	    <servlet-class>com.blog.servlets.UserServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-	    <servlet-name>Home</servlet-name>
-	    <url-pattern>/home</url-pattern>
+	    <servlet-name>UserServlet</servlet-name>
+	    <url-pattern>/userServlet</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -73,6 +78,15 @@
 	    <url-pattern>/completeProfile</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+	    <servlet-name>Profile</servlet-name>
+	    <servlet-class>com.blog.servlets.Profile</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	    <servlet-name>Profile</servlet-name>
+	    <url-pattern>/profile</url-pattern>
+  </servlet-mapping>
+  
    <servlet>
 	    <servlet-name>Search</servlet-name>
 	    <servlet-class>com.blog.servlets.Search</servlet-class>
@@ -118,6 +132,50 @@
 	    <url-pattern>/following</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+	    <servlet-name>AddPost</servlet-name>
+	    <servlet-class>com.blog.servlets.AddPost</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	    <servlet-name>AddPost</servlet-name>
+	    <url-pattern>/addPost</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+	    <servlet-name>ShowPost</servlet-name>
+	    <servlet-class>com.blog.servlets.ShowPost</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	    <servlet-name>ShowPost</servlet-name>
+	    <url-pattern>/showPost</url-pattern>
+  </servlet-mapping>
+  
+  
+   <servlet>
+	    <servlet-name>CommentServlet</servlet-name>
+	    <servlet-class>com.blog.servlets.CommentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	    <servlet-name>CommentServlet</servlet-name>
+	    <url-pattern>/commentServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+	    <servlet-name>UpdateProfile</servlet-name>
+	    <servlet-class>com.blog.servlets.UpdateProfile</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	    <servlet-name>UpdateProfile</servlet-name>
+	    <url-pattern>/updateProfile</url-pattern>
+  </servlet-mapping>
+  
+  <!-- ERROR PAGES -->
+  <error-page>
+    <location>/WEB-INF/error404.html</location>
+  </error-page>
+  <error-page>
+    <location>/WEB-INF/error500.html</location>
+  </error-page>
   
   <!-- TAGLIBS CONFIG IN JSP -->
  <jsp-config>

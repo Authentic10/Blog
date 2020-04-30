@@ -40,7 +40,7 @@ public class AuthenticationFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		  HttpServletRequest req = (HttpServletRequest) request;
+		    HttpServletRequest req = (HttpServletRequest) request;
 	        HttpServletResponse res = (HttpServletResponse) response;
 
 	        HttpSession session = req.getSession();

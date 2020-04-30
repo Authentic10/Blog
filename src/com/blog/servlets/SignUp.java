@@ -51,6 +51,7 @@ public class SignUp extends HttpServlet {
 			if(check=="ok") {
 				HttpSession session = request.getSession();
 				session.setAttribute("username", request.getParameter("username"));
+				session.setAttribute("account", form.getAccount());
 							
 				this.getServletContext().getRequestDispatcher("/VIEWS/codeVerification.jsp").forward(request, response);
 			}else {			

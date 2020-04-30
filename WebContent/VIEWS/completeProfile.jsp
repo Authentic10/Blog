@@ -57,6 +57,7 @@
 		</script>
 	</c:when>
 </c:choose>
+
 <div class="container">
 	<div class="msg_error" role="alert">
  		Message d'erreur
@@ -96,7 +97,9 @@
 
 <script type="text/javascript">
 	 $('.msg_error').hide();
-	 $(document).ready(function () {		 
+	 $(document).ready(function () {
+		 
+		 	/*Form validation*/
 		    $('#btn-profile').click(function () {
 		        var firstname = $('#firstname').val();
 		        var lastname = $('#lastname').val();

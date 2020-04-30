@@ -13,16 +13,19 @@ import com.blog.db.DBConnection;
 
 public class Relation {
 	
-	int userId;
-	
-	int userFollowerId;
-	
-	int userFollowingId;
-	
+	/**
+	 * user followers size
+	 */
 	int followersSize;
 	
+	/**
+	 * user following size
+	 */
 	int followingSize;
 	
+	/**
+	 * follow
+	 */
 	int follow;
 	
 	/**
@@ -34,50 +37,10 @@ public class Relation {
 	 * Query result
 	 */
 	private String queryResult;
-
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
-	public int getUserFollowerId() {
-		return userFollowerId;
-	}
-
-	public void setUserFollowerId(int userFollowerId) {
-		this.userFollowerId = userFollowerId;
-	}
-
-	public int getUserFollowingId() {
-		return userFollowingId;
-	}
-
-	public void setUserFollowingId(int userFollowingId) {
-		this.userFollowingId = userFollowingId;
-	}
 	
-	
-	
-	public Connection getConnection() {
-		return connection;
-	}
-
-	public void setConnection(Connection connection) {
-		this.connection = connection;
-	}
-
-	public String getQueryResult() {
-		return queryResult;
-	}
-
 	public void setQueryResult(String queryResult) {
 		this.queryResult = queryResult;
 	}
-	
-	
 
 	public int getFollowersSize() {
 		return followersSize;
@@ -103,7 +66,23 @@ public class Relation {
 	public void setFollow(int follow) {
 		this.follow = follow;
 	}
+	
+	public Connection getConnection() {
+		return connection;
+	}
 
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+
+	public String getQueryResult() {
+		return queryResult;
+	}
+
+
+	/**
+	 * Follow an user
+	 */
 	public void FollowUser(HttpServletRequest request) {
 		
 		PreparedStatement state = null;
@@ -154,7 +133,64 @@ public class Relation {
 		DBConnection.close();
 		
 	}
+	
+	/**
+	 * Stop following an user
+	 */
+	public void UnfollowUser(HttpServletRequest request) {
+		
+		PreparedStatement state = null;
+		
+		String current_user = request.getParameter("current_user");
+		String user = request.getParameter("user");
+		
+		int current_id = getUserId(current_user);
+		int user_id = getUserId(user);
+		
+		if(current_id!=0 || user_id!=0) {
+			
+			connection = DBConnection.getInstance();
+			 
+			try {
+				state = connection.prepareStatement("DELETE FROM Following WHERE userID = ? AND userFollowingID = ?");
+					
+				state.setInt(1, current_id);
+				state.setInt(2, user_id);
 
+				state.executeUpdate();
+				
+				queryResult = "ok";
+				
+			}
+			catch(SQLException e){
+				queryResult= "no";
+				e.printStackTrace();
+			}
+			
+			try {
+				state = connection.prepareStatement("DELETE FROM Followers WHERE userID = ? AND userFollowerID = ?");
+					
+				state.setInt(1, user_id);
+				state.setInt(2, current_id);
+
+				state.executeUpdate();
+				
+				queryResult = "ok";
+				
+			}
+			catch(SQLException e){
+				queryResult= "no";
+				e.printStackTrace();
+			}
+		}
+			
+		DBConnection.close();
+		
+	}
+
+	/**
+	 * Get user id
+	 */
 	public int getUserId(String username) {
 		ResultSet result = null;
 		PreparedStatement state = null;
@@ -193,7 +229,10 @@ public class Relation {
 		return id;
 	
 }
-	
+
+	/**
+	 * Get user following size
+	 */
 	public void getUserFollwersSize(String username) {
 		ResultSet result = null;
 		PreparedStatement state = null;
@@ -231,7 +270,10 @@ public class Relation {
 		DBConnection.close();
 			
 }
-	
+
+	/**
+	 * Get user following size
+	 */
 	public void getUserFollwingSize(String username) {
 		ResultSet result = null;
 		PreparedStatement state = null;
@@ -270,6 +312,9 @@ public class Relation {
 			
 }
 	
+	/**
+	 * Check if an user follow another user
+	 */
 	public void checkIfUserFollow(String user, String current_user) {
 		ResultSet result = null;
 		PreparedStatement state = null;
@@ -296,9 +341,7 @@ public class Relation {
 				}
 				
 				follow = followUser;
-				
-				System.out.println("FOLLOW : "+followUser);
-				
+								
 				queryResult = "ok";
 				
 			}
@@ -312,6 +355,9 @@ public class Relation {
 			
 }
 	
+	/**
+	 * Get user followers
+	 */
 	public List<User> getUserFollowers(String username) {
 		
 		List<User> users = new ArrayList<User>();
@@ -366,7 +412,9 @@ public class Relation {
 		return users;
 	}
 	
-	
+	/**
+	 * Get user following
+	 */
 	public List<User> getUserFollowing(String username) {
 		
 		List<User> users = new ArrayList<User>();

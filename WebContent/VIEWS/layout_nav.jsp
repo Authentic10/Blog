@@ -14,15 +14,15 @@
 	    <li class="nav-item active">
 	      <a class="nav-link" href="#"><i class="fas fa-search" title="Search" style="font-size:1.2em" id="search_icon"></i></a>
 	    </li>
-	    <li class="nav-item active">
+	    <!--  <li class="nav-item active">
 	      <a class="nav-link" href="#"><i class="fas fa-bell" title="Notifications" style="font-size:1.2em"></i></a>
-	    </li>
+	    </li> -->
 	    <li class="nav-item dropdown mr-5">
 	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	          <img class="rounded-circle float-left" alt="" width="24" height="24" src='<c:out value="${sessionScope.avatar}"/>'>
 	        </a>
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	          <a class="dropdown-item" href="#"><i class="fas fa-plus" title="New Post"></i>  New Post</a>
+	          <a class="dropdown-item" href="AddPost"><i class="fas fa-plus" title="New Post"></i>  New Post</a>
 	          <a class="dropdown-item" href="Followers?username=${sessionScope.username}"><i class="fas fa-user-friends" title="Relations"></i> Relations</a>
 	          <a class="dropdown-item" href="Profile?username=${sessionScope.username}"><i class="fas fa-user" title="Profile"></i>  Profile</a>
 	          <div class="dropdown-divider"></div>
@@ -32,14 +32,15 @@
     </ul>
   </div>
 </nav>
-<div class="container">
-	<div class="dropdown-menu"  id="search_result" style="position:sticky;width:30%;left: 45% !important;transform: translateX(-45%) !important;">
+<div class="d-flex justify-content-center">
+	<div class="dropdown-menu"  id="search_result" style="position:sticky;width:22%;">
 	</div>
 </div>
 
 
 <script type="text/javascript">
 $(document).ready(function() {
+	
     $('#search_input').keyup(function() {
             var name = $('#search_input').val();
             
@@ -47,8 +48,10 @@ $(document).ready(function() {
       
             if(name.length!=0) {
             	$('#search_result').show();
+            	$('.container').hide();
             } else {
             	$('#search_result').hide();
+            	$('.container').show();
             }
             
             $.ajax({

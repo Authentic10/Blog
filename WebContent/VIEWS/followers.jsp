@@ -20,6 +20,9 @@
 		  </li>
 		</ul>
 	  <br>
+	  <c:if test="${empty followers }">
+	  		<h5><c:out value="${username }"/> does not have followers !</h5>
+	  </c:if>
 	  <table class="table table-hover">
 	   <c:forEach var="follow" items="${followers}" varStatus="i">
 		    <tr>	      
@@ -62,6 +65,8 @@
 		    	 } else{
 		    		 $("#search_icon").removeClass("fas fa-times");
 		    		 $("#search_icon").addClass("fas fa-search");
+		    		 $("#search_result").hide();
+		    		 $(".container").show();
 		    	 }        
 		    });
 
